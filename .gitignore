@@ -34,3 +34,15 @@ Icon
 # Files that might appear on external disk
 .Spotlight-V100
 .Trashes
+
+*.classpath
+*.project
+.settings/org.eclipse.jdt.core.prefs
+.settings/org.eclipse.m2e.core.prefs
+.settings/org.eclipse.wst.common.component
+.settings/org.eclipse.wst.common.project.facet.core.xml
+.settings/org.eclipse.wst.validation.prefs
+*.class
+target/classes/META-INF/MANIFEST.MF
+target/classes/META-INF/maven/admsUtils/admsUtils/pom.properties
+target/classes/META-INF/maven/admsUtils/admsUtils/pom.xml
