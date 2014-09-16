@@ -46,3 +46,4 @@ Icon
 target/classes/META-INF/MANIFEST.MF
 target/classes/META-INF/maven/admsUtils/admsUtils/pom.properties
 target/classes/META-INF/maven/admsUtils/admsUtils/pom.xml
+/target
