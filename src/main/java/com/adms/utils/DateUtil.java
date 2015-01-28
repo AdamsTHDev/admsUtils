@@ -91,7 +91,7 @@ public class DateUtil {
 	 * @return format date
 	 */
 	public static String convDateToString(String pattern, Date date) {
-		SimpleDateFormat sdf = new SimpleDateFormat(defaultDatePattern);
+		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		String arg = null;
 		
 		if(date != null) {
