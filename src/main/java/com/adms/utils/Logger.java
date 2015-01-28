@@ -9,7 +9,7 @@ import org.apache.commons.lang3.StringUtils;
 
 public class Logger {
 
-	private static final String LOG_TIME_FORMAT = "yyyyMMdd HH:mm:ss:SSS";
+	private static final String LOG_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss:SSS";
 	private static final Locale LOG_TIME_LOCALE = Locale.US;
 	private DateFormat logDf = new SimpleDateFormat(LOG_TIME_FORMAT, LOG_TIME_LOCALE);
 
@@ -70,9 +70,9 @@ public class Logger {
 		String methodName = getMethodName();
 		int lineNumber = getLineNumber();
 
-		String classInfo = StringUtils.leftPad(className + "." + methodName, 50, ' ') + ":" + StringUtils.rightPad("" + lineNumber, 4);
+		String classInfo = StringUtils.leftPad(className + "." + methodName, 50, ' ') + "():" + StringUtils.rightPad("" + lineNumber, 4);
 
-		return new StringBuilder("").append(prefix).append(this.logDf.format(Calendar.getInstance(LOG_TIME_LOCALE).getTime())).append(" ").append(classInfo).append(" - ").append(message).toString();
+		return new StringBuilder("").append(this.logDf.format(Calendar.getInstance(LOG_TIME_LOCALE).getTime())).append(" ").append(prefix).append(" ").append(classInfo).append(" - ").append(message).toString();
 	}
 
 	private void log(String prefix, String message)
