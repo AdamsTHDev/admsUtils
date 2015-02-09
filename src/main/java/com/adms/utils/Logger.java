@@ -70,7 +70,7 @@ public class Logger {
 		String methodName = getMethodName();
 		int lineNumber = getLineNumber();
 
-		String classInfo = StringUtils.leftPad(className + "." + methodName, 50, ' ') + "():" + StringUtils.rightPad("" + lineNumber, 4);
+		String classInfo = StringUtils.leftPad(className + "." + methodName, 0, ' ') + ":" + StringUtils.rightPad("" + lineNumber, 4);
 
 		return new StringBuilder("").append(this.logDf.format(Calendar.getInstance(LOG_TIME_LOCALE).getTime())).append(" ").append(prefix).append(" ").append(classInfo).append(" - ").append(message).toString();
 	}
