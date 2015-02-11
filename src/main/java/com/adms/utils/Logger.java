@@ -106,9 +106,40 @@ public class Logger {
 		}
 	}
 
-	private void err(String prefix, String message)
+	private void err(String prefix, String message, Throwable throwable)
 	{
-		System.err.println(buildMessage(prefix, message));
+		String log = buildMessage(prefix, message);
+		
+		System.err.println(log);
+		
+		if (outputStream != null)
+		{
+			try
+			{
+				outputStream.write((log + "\r\n").getBytes());
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		if (throwable != null)
+		{
+			for (StackTraceElement stackTraceElement : throwable.getStackTrace())
+			{
+				try
+				{
+					outputStream.write(("          at " + stackTraceElement.getClassName() + "." + stackTraceElement.getMethodName() + "(" + stackTraceElement.getFileName() + ":" + stackTraceElement.getLineNumber() + ")" + "\r\n").getBytes());
+				}
+				catch (IOException e)
+				{
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	}
 
 	public void debug(String message)
@@ -131,7 +162,7 @@ public class Logger {
 	{
 		if (this.logLevel >= Logger.WARN)
 		{
-			err(" WARN ", message);
+			err(" WARN ", message, null);
 		}
 	}
 
@@ -139,7 +170,15 @@ public class Logger {
 	{
 		if (this.logLevel >= Logger.ERROR)
 		{
-			err("ERROR ", message);
+			err("ERROR ", message, null);
+		}
+	}
+
+	public void error(String message, Throwable throwable)
+	{
+		if (this.logLevel >= Logger.ERROR)
+		{
+			err("ERROR ", message, throwable);
 		}
 	}
 
@@ -147,7 +186,7 @@ public class Logger {
 	{
 		if (this.logLevel >= Logger.FATAL)
 		{
-			err("FATAL ", message);
+			err("FATAL ", message, null);
 		}
 	}
 
@@ -158,5 +197,15 @@ public class Logger {
 		Logger.getLogger().setLogLevel(DEBUG);
 		Logger.getLogger().info("test info");
 		Logger.getLogger().debug("test debug");
+		
+		try
+		{
+			String s = null;
+			s.compareTo(null);
+		}
+		catch (Exception e)
+		{
+			Logger.getLogger().error("test error", e);
+		}
 	}
 }
