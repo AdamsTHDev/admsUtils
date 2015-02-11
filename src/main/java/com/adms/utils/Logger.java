@@ -1,5 +1,9 @@
 package com.adms.utils;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -24,6 +28,13 @@ public class Logger {
 	private int logLevel = 40;
 
 	private static Logger log;
+	
+	private OutputStream outputStream;
+
+	public void setOutputStream(OutputStream outputStream)
+	{
+		this.outputStream = outputStream;
+	}
 
 	private Logger(int logLevel)
 	{
@@ -77,7 +88,22 @@ public class Logger {
 
 	private void log(String prefix, String message)
 	{
-		System.out.println(buildMessage(prefix, message));
+		String log = buildMessage(prefix, message);
+		
+		System.out.println(log);
+		
+		if (outputStream != null)
+		{
+			try
+			{
+				outputStream.write((log + "\r\n").getBytes());
+			}
+			catch (IOException e)
+			{
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 
 	private void err(String prefix, String message)
@@ -123,5 +149,14 @@ public class Logger {
 		{
 			err("FATAL ", message);
 		}
+	}
+
+	public static void main(String[] a) throws FileNotFoundException
+	{
+		OutputStream os = new FileOutputStream("d:/testlog.txt");
+		Logger.getLogger().setOutputStream(os);
+		Logger.getLogger().setLogLevel(DEBUG);
+		Logger.getLogger().info("test info");
+		Logger.getLogger().debug("test debug");
 	}
 }
