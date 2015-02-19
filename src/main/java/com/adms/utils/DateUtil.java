@@ -1,6 +1,8 @@
 package com.adms.utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 /**
@@ -19,11 +21,87 @@ public class DateUtil {
 	 */
 	private static final String defaultTimePattern = "HH:mm:ss";
 	
+	/**
+	 * Default value: {@value #defaultMonthPattern}
+	 */
+	private static final String defaultMonthPattern = "MMM";
+	
 	public static String getDefaultDatePattern() {
 		return defaultDatePattern;
 	}
+	
 	public static String getDefaultTimePattern() {
 		return defaultTimePattern;
+	}
+	
+	public static String getDefaultMonthPattern() {
+		return defaultMonthPattern;
+	}
+	
+	public static Calendar getCurrentCalendar() {
+		return Calendar.getInstance();
+	}
+	
+	public static Date getCurrentDate() {
+		return Calendar.getInstance().getTime();
+	}
+	
+	public static void addDay(Calendar calendar, int noOfday) {
+		calendar.add(Calendar.DATE, noOfday);
+	}
+	
+	public static void addMonth(Calendar calendar, int noOfMonth) {
+		calendar.add(Calendar.MONTH, noOfMonth);
+	}
+	
+	public static void addYear(Calendar calendar, int noOfYear) {
+		calendar.add(Calendar.YEAR, noOfYear);
+	}
+	
+	/**
+	 * Get String of month, default is {@link #defaultMonthPattern}
+	 * @param month is No of month minus 1;
+	 * <br/> ex: Jan is 0, Feb is 1, Dec is 11
+	 * @return
+	 */
+	public static String getStringOfMonth(int month) {
+		return getStringOfMonth(defaultMonthPattern, month);
+	}
+	
+	/**
+	 * Get String of month
+	 * @param month is No of month minus 1;
+	 * <br/> ex: Jan is 0, Feb is 1, Dec is 11
+	 * @return
+	 */
+	public static String getStringOfMonth(String pattern, int month) {
+		Calendar cal = getCurrentCalendar();
+		cal.set(2000, month, 1);
+		return new SimpleDateFormat(pattern).format(cal.getTime());
+	}
+	
+	/**
+	 * Get Integer of month
+	 * @param month default pattern is {@link #defaultMonthPattern}
+	 * @return <b>Integer of month;</b> ex: 0 is Jan
+	 * @throws ParseException
+	 */
+	public static int getMonthNo(String month) throws ParseException {
+		return getMonthNo(defaultMonthPattern, month);
+	}
+
+	
+	/**
+	 * Get Integer of month
+	 * @param pattern is pattern of Month
+	 * @param month String of Month
+	 * @return <b>Integer of month;</b> ex: 0 is Jan
+	 * @throws ParseException
+	 */
+	public static int getMonthNo(String pattern, String month) throws ParseException {
+		Calendar cal = getCurrentCalendar();
+		cal.setTime(new SimpleDateFormat(pattern).parse(pattern));
+		return cal.get(Calendar.MONTH);
 	}
 	
 	/**
