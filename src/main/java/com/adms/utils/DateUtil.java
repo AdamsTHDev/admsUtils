@@ -26,14 +26,26 @@ public class DateUtil {
 	 */
 	private static final String defaultMonthPattern = "MMM";
 	
+	/**
+	 * 
+	 * @return {@link #defaultDatePattern}
+	 */
 	public static String getDefaultDatePattern() {
 		return defaultDatePattern;
 	}
 	
+	/**
+	 * 
+	 * @return {@link #defaultTimePattern}
+	 */
 	public static String getDefaultTimePattern() {
 		return defaultTimePattern;
 	}
 	
+	/**
+	 * 
+	 * @return {@link #defaultMonthPattern}
+	 */
 	public static String getDefaultMonthPattern() {
 		return defaultMonthPattern;
 	}
@@ -100,7 +112,7 @@ public class DateUtil {
 	 */
 	public static int getMonthNo(String pattern, String month) throws ParseException {
 		Calendar cal = getCurrentCalendar();
-		cal.setTime(new SimpleDateFormat(pattern).parse(pattern));
+		cal.setTime(new SimpleDateFormat(pattern).parse(month));
 		return cal.get(Calendar.MONTH);
 	}
 	
