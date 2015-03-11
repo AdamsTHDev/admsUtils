@@ -27,6 +27,11 @@ public class DateUtil {
 	private static final String defaultMonthPattern = "MMM";
 	
 	/**
+	 * Default value: {@value #defualtFullDayPattern}
+	 */
+	private static final String defualtFullDayPattern = "EEEE";
+	
+	/**
 	 * 
 	 * @return {@link #defaultDatePattern}
 	 */
@@ -48,6 +53,14 @@ public class DateUtil {
 	 */
 	public static String getDefaultMonthPattern() {
 		return defaultMonthPattern;
+	}
+	
+	/**
+	 * 
+	 * @return {@link #defualtFullDayPattern}
+	 */
+	public static String getDefualtFullDayPattern() {
+		return getDefualtFullDayPattern();
 	}
 	
 	public static Calendar getCurrentCalendar() {
@@ -89,7 +102,16 @@ public class DateUtil {
 	public static String getStringOfMonth(String pattern, int month) {
 		Calendar cal = getCurrentCalendar();
 		cal.set(2000, month, 1);
-		return new SimpleDateFormat(pattern).format(cal.getTime());
+		return convDateToString(pattern, cal.getTime());
+	}
+	
+	/**
+	 * Get Day in String
+	 * @param date
+	 * @return
+	 */
+	public static String getDayString(Date date) {
+		return convDateToString(defualtFullDayPattern, date);
 	}
 	
 	/**
@@ -112,7 +134,7 @@ public class DateUtil {
 	 */
 	public static int getMonthNo(String pattern, String month) throws ParseException {
 		Calendar cal = getCurrentCalendar();
-		cal.setTime(new SimpleDateFormat(pattern).parse(month));
+		cal.setTime(convStringToDate(pattern, month));
 		return cal.get(Calendar.MONTH);
 	}
 	
