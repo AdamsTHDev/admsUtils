@@ -5,6 +5,8 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * The Date Utility 
  * 
@@ -136,6 +138,29 @@ public class DateUtil {
 		Calendar cal = getCurrentCalendar();
 		cal.setTime(convStringToDate(pattern, month));
 		return cal.get(Calendar.MONTH);
+	}
+	
+	/**
+	 * <b>For MGL Report</b>
+	 * <br/>
+	 * ex result: 2917:53:11 > HH:mm:ss
+	 * @param hours
+	 * @param min
+	 * @param sec
+	 * @return
+	 */
+	public static String getTotalHHmmss(Long hours, Long min, Long sec) {
+		
+		Long min1 = sec / 60;
+		Long hours1 = (min + min1) / 60;
+		
+		hours += hours1;
+		min = (min + min1) % 60;
+		sec = sec % 60;
+		
+		String result = "" + hours + ":" + StringUtils.leftPad("" + min, 2, '0') + ":" + StringUtils.leftPad("" + sec, 2, '0');
+		
+		return result;
 	}
 	
 	/**
