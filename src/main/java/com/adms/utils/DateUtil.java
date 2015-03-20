@@ -167,8 +167,9 @@ public class DateUtil {
 	 * Convert string to Date with {@link #defaultDatePattern}
 	 * @param strDate the date String
 	 * @return The parse date
+	 * @throws Exception 
 	 */
-	public static Date convStringToDate(String strDate) {
+	public static Date convStringToDate(String strDate) throws Exception {
 		return convStringToDate(defaultDatePattern, strDate);
 	}
 	
@@ -176,8 +177,9 @@ public class DateUtil {
 	 * Convert string to Date and time with {@link #defaultDatePattern} and {@link #defaultTimePattern}
 	 * @param strDate the date String
 	 * @return The parse date
+	 * @throws Exception 
 	 */
-	public static Date convStringToDateTime(String strDate) {
+	public static Date convStringToDateTime(String strDate) throws Exception {
 		return convStringToDate(defaultDatePattern + " " + defaultTimePattern, strDate);
 	}
 	
@@ -186,8 +188,9 @@ public class DateUtil {
 	 * @param pattern the pattern style
 	 * @param strDate the date String
 	 * @return The parse date
+	 * @throws ParseException 
 	 */
-	public static Date convStringToDate(String pattern, String strDate) {
+	public static Date convStringToDate(String pattern, String strDate) throws ParseException {
 		SimpleDateFormat sdf = new SimpleDateFormat(pattern);
 		Date date = null;
 		
@@ -198,7 +201,7 @@ public class DateUtil {
 			}
 			
 		} catch (java.text.ParseException e) {
-			e.printStackTrace();
+			throw e;
 		}
 		return date;
 	}
