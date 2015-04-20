@@ -42,6 +42,13 @@ public class FileUtil {
 		return null;
 	}
 	
+	public void createDirectory(String path) {
+		File file = new File(path);
+		if(!file.exists()) {
+			file.mkdirs();
+		}
+	}
+	
 	public String writeout(File fileOut, StringBuffer contents) throws Exception {
 		return writeout(fileOut, contents, encodeType);
 	}
