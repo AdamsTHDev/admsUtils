@@ -1,7 +1,5 @@
 package com.adms.utils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
@@ -27,14 +25,14 @@ public class PropertyResource {
 	}
 
 	public String getValue(String name)
-			throws IOException
+			throws Exception
 	{
 		if (this.prop == null)
 		{
 			InputStream propIs = null;
 			try
 			{
-				propIs = new FileInputStream(propPath);
+				propIs = ClassLoader.getSystemResourceAsStream(propPath);
 
 				this.prop = new Properties();
 				this.prop.load(propIs);
