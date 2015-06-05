@@ -32,7 +32,7 @@ public class PropertyResource {
 			InputStream propIs = null;
 			try
 			{
-				propIs = ClassLoader.getSystemResourceAsStream(propPath);
+				propIs = Thread.currentThread().getContextClassLoader().getResourceAsStream(propPath);
 
 				this.prop = new Properties();
 				this.prop.load(propIs);
