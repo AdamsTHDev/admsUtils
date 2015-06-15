@@ -4,6 +4,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
 
@@ -239,5 +240,37 @@ public class DateUtil {
 		}
 		
 		return arg;
+	}
+	
+	/**
+	 * Convert Date to End of Month
+	 * @param date the date
+	 * @return End of Month
+	 */
+	public static boolean isEndOfMonth(Date date)
+	{
+		Calendar c1 = Calendar.getInstance(Locale.US);
+		Calendar c2 = Calendar.getInstance(Locale.US);
+		c1.setTime(date);
+		c2.setTime(date);
+		c2.add(Calendar.DATE, 1);
+		
+		return c1.get(Calendar.MONTH) != c2.get(Calendar.MONTH);
+	}
+	
+	/**
+	 * Convert Date to End of Month
+	 * @param date the date
+	 * @return End of Month
+	 */
+	public static Date toEndOfMonth(Date date)
+	{
+		Calendar c = Calendar.getInstance(Locale.US);
+		c.setTime(date);
+		c.add(Calendar.DATE, -(c.get(Calendar.DATE) - 1));
+		c.add(Calendar.MONTH, 1);
+		c.add(Calendar.DATE, -1);
+		
+		return c.getTime();
 	}
 }
