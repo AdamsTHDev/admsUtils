@@ -1,10 +1,13 @@
 package com.adms.utils;
 
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.Locale;
 
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +35,16 @@ public class Logger {
 	public void setOutputStream(OutputStream outputStream)
 	{
 		this.outputStream = outputStream;
+	}
+
+	public void setLogFileName(String logFileName)
+			throws FileNotFoundException
+	{
+		if (logFileName != null)
+		{
+			logFileName.replace("logTime", "" + new SimpleDateFormat("yyyyMMdd_hhmmssSSS").format(new Date()));
+			setOutputStream(new FileOutputStream(logFileName));
+		}
 	}
 
 	private Logger(int logLevel)

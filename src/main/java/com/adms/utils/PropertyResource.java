@@ -1,33 +1,54 @@
 package com.adms.utils;
 
-import java.io.FileInputStream;
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
 public class PropertyResource {
 
+	private static PropertyResource PROPERTY_RESOURCE;
+	private Properties prop;
 	private String propPath;
-	
-	public PropertyResource(String propPath) {
+
+	private PropertyResource(String propPath)
+	{
 		this.propPath = propPath;
 	}
-	
-	public String getValue(String name) throws IOException {
-		Properties prop = new Properties();
-		InputStream propIs = null;
-		try {
-			propIs = new FileInputStream(propPath);
-			prop.load(propIs);
-			
-			return prop.getProperty(name);
-		} catch(Exception e) {
-			e.printStackTrace();
-		} finally {
-			propIs.close();
+
+	public static PropertyResource getInstance(String propPath)
+	{
+		if (PROPERTY_RESOURCE == null)
+		{
+			PROPERTY_RESOURCE = new PropertyResource(propPath);
 		}
-		
-		return "";
+
+		return PROPERTY_RESOURCE;
 	}
-	
+
+	public String getValue(String name)
+			throws Exception
+	{
+		if (this.prop == null)
+		{
+			InputStream propIs = null;
+			try
+			{
+				propIs = Thread.currentThread().getContextClassLoader().getResourceAsStream(propPath);
+
+				this.prop = new Properties();
+				this.prop.load(propIs);
+			}
+			catch (Exception e)
+			{
+				e.printStackTrace();
+				throw e;
+			}
+			finally
+			{
+				propIs.close();
+			}
+		}
+
+		return prop.getProperty(name);
+	}
+
 }
