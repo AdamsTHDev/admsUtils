@@ -42,7 +42,7 @@ public class Logger {
 	{
 		if (logFileName != null)
 		{
-			logFileName.replace("logTime", "" + new SimpleDateFormat("yyyyMMdd_hhmmssSSS").format(new Date()));
+			logFileName = logFileName.replace("logTime", "" + new SimpleDateFormat("yyyyMMdd_hhmmssSSS").format(new Date()));
 			setOutputStream(new FileOutputStream(logFileName));
 		}
 	}
