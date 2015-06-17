@@ -2,7 +2,10 @@ package com.adms.utils;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
 
@@ -40,6 +43,45 @@ public class FileUtil {
 			fos.close();
 		}
 		return null;
+	}
+	
+	public void copyFile(String original, String destination) throws Exception {
+		copyFile(new File(original), new File(destination));
+	}
+	
+	public void copyFile(File original, File destination) throws Exception {
+		InputStream is = null;
+		OutputStream os = null;
+		
+		try {
+			createDirectory(original.getAbsolutePath());
+			
+			is = new FileInputStream(original);
+			os = new FileOutputStream(destination);
+			
+			byte[] buffer = new byte[1024];
+			
+			int length;
+//			copy file content in bytes
+			while((length = is.read(buffer)) > 0) {
+				os.write(buffer, 0, length);
+			}
+			
+		} catch(Exception e) {
+			throw e;
+		} finally {
+			try { is.close(); } catch(Exception e) {}
+			try { os.close(); } catch(Exception e) {}
+		}
+	}
+	
+	public void moveFile(File original, File destination) throws Exception {
+		copyFile(original, destination);
+		original.delete();
+	}
+	
+	public void moveFile(String original, String destination) throws Exception {
+		moveFile(new File(original), new File(destination));
 	}
 	
 	public void createDirectory(String path) {
