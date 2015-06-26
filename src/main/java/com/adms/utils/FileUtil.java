@@ -11,7 +11,10 @@ import java.io.Writer;
 
 public class FileUtil {
 
-	private String encodeType = "UTF-8";
+	/**
+	 * UTF-8
+	 */
+	private final String defaultEncodingType = "UTF-8";
 	private static FileUtil instance;
 	
 	public static FileUtil getInstance() {
@@ -21,14 +24,28 @@ public class FileUtil {
 		return instance;
 	}
 	
+	/**
+	 * For Writing file out with {@link #defaultEncodingType}
+	 * @param fileOut
+	 * @param contents
+	 * @return absolutePath of File
+	 * @throws Exception
+	 */
+	public String writeout(File fileOut, StringBuffer contents) throws Exception {
+		return writeout(fileOut, contents, defaultEncodingType);
+	}
+	
+	public String writeOut(String fullPath, StringBuffer contents, String encodeType) throws Exception {
+		return writeout(new File(fullPath), contents, encodeType);
+	}
+	
 	public String writeout(File fileOut, StringBuffer contents, String encodeType) throws Exception {
 		FileOutputStream fos = null;
 		Writer writer = null;
 		try {
 			if(contents != null && contents.length() > 0) {
-				if(!fileOut.exists()) {
-					fileOut.createNewFile();
-				}
+				if(!fileOut.exists()) fileOut.createNewFile();
+				
 				fos = new FileOutputStream(fileOut);
 				writer = new BufferedWriter(new OutputStreamWriter(fos, encodeType));
 				writer.write(contents.toString());
@@ -38,9 +55,9 @@ public class FileUtil {
 		} catch(Exception e) {
 			throw e;
 		} finally {
-			writer.flush();
-			writer.close();
-			fos.close();
+			try{writer.flush();}catch(Exception e) {}
+			try{writer.close();}catch(Exception e) {}
+			try{fos.close();}catch(Exception e) {}
 		}
 		return null;
 	}
@@ -89,13 +106,5 @@ public class FileUtil {
 		if(!file.exists()) {
 			file.mkdirs();
 		}
-	}
-	
-	public String writeout(File fileOut, StringBuffer contents) throws Exception {
-		return writeout(fileOut, contents, encodeType);
-	}
-	
-	public void setEncodeType(String encodeType) {
-		this.encodeType = encodeType;
 	}
 }
